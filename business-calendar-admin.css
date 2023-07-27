@@ -1,0 +1,103 @@
+@charset 'utf-8';
+#business_calendar_custom_field .table-wrap{
+    border-collapse: collapse;
+}
+#business_calendar_custom_field .table-wrap > tbody > tr > th{
+    width: 120px;
+}
+#business_calendar_custom_field .table-wrap > tbody > tr > td{
+    width: calc(100% - 120px);
+}
+#business_calendar_custom_field .table-wrap > tbody > tr > td p{
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+#business_calendar_custom_field .table-wrap > tbody > tr > td textarea{
+    width: 100%;
+    height: 200px;
+    resize: none;
+}
+#business_calendar_custom_field .table-wrap > tbody > tr > th,
+#business_calendar_custom_field .table-wrap > tbody > tr > td{
+    padding: 12px 20px;
+    border: 1px solid #bdbdbd;
+}
+#business_calendar_custom_field .table-wrap > tbody > tr > th{
+    background-color: #efefef;
+    text-align: left;
+}
+#business_calendar_custom_field .input-check{
+    display: none;
+}
+#business_calendar_custom_field .input-check-label{
+    border: 1px solid #2271b1;
+    padding: 5px 15px;
+    border-radius: 2px;
+    color: #2271b1;
+    display: inline-block;
+    margin-right: 15px;
+    transition: .2s;
+}
+#business_calendar_custom_field .input-check-label:last-child{
+    margin-right: 0;
+}
+#business_calendar_custom_field .input-check:checked + .input-check-label{
+    background-color: #5a9fd7;
+    color: #fff;
+}
+#business_calendar_custom_field .calendar-grid{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+#business_calendar_custom_field .calendar-table{
+    width: calc((100% - 60px)/4);
+    border: 1px solid #efefef;
+    border-collapse: collapse;
+}
+#business_calendar_custom_field .calendar-table th.sun{
+    color: #fff;
+    background-color: #ff7c7c;
+}
+#business_calendar_custom_field .calendar-table th.sat{
+    background-color: #2271b1;
+    color: #fff;
+}
+#business_calendar_custom_field .calendar-table th,
+#business_calendar_custom_field .calendar-table td label{
+    padding: 0;
+    height: 30px;
+}
+#business_calendar_custom_field .calendar-table td label{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+#business_calendar_custom_field .calendar-table th,
+#business_calendar_custom_field .calendar-table td{
+    border: 1px solid #ddd;
+    text-align: center;
+}
+#business_calendar_custom_field .calendar-table td{
+    padding: 0;
+    height: 30px;
+}
+#business_calendar_custom_field .calendar-table td input[type="checkbox"]{
+    display: none;
+}
+#business_calendar_custom_field .calendar-table td.holiday,
+#business_calendar_custom_field .calendar-table td input[type="checkbox"]:checked + label{
+    background-color: #ff7c7c;
+    color: #fff;
+}
+#business_calendar_custom_field .calendar-table th[colspan]{
+    background-color: #5e5e5e;
+    color: #fff;
+    font-size: 12px;
+}
+#business_calendar_custom_field .calendar-table th[colspan] span{
+    margin-right: 2px;
+    font-size: 16px;
+}

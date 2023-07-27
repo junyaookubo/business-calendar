@@ -1,0 +1,47 @@
+@charset 'utf-8';
+
+.calendar-table{
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+.calendar-table thead .month th{
+    text-align: center;
+    background-color: transparent;
+    color: #231815;
+    border: none;
+}
+.calendar-table thead .month th:not([colspan]){
+    font-size: 15px;
+}
+.calendar-table thead .dayWeek th{
+    background-color: #5e6265;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+}
+.calendar-table thead th + th {
+    border-left: 1px solid #fff;
+}
+.calendar-table th,
+.calendar-table td{
+    border: 1px solid #ccc;
+}
+.calendar-table td{
+    height: 100px;
+    padding: 20px;
+    line-height: 1;
+    width: calc(100% / 7);
+    vertical-align: top;
+}
+.calendar-table td.holiday{
+    background-color: #ff7c7c;
+    color: #fff;
+}
+.calendar-table td small{
+    font-size: 13px;
+    margin-left: 10px;
+}
+.calendar-table .calendar-link{
+    cursor: pointer;
+}
