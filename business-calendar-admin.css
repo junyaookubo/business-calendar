@@ -9,9 +9,36 @@
     width: calc(100% - 120px);
 }
 #business_calendar_custom_field .table-wrap > tbody > tr > td p{
-    font-size: 16px;
+    font-size: 24px;
     font-weight: bold;
-    text-align: center;
+    color: #2271b1;
+    display: flex;
+    align-items: center;
+}
+#business_calendar_custom_field .table-wrap > tbody > tr > td p small{
+    font-size: 16px;
+    position: relative;
+    bottom: -3px;
+    display: inline-block;
+    margin-left: 5px;
+    color: #2271b1;
+    font-weight: bold;
+}
+#business_calendar_custom_field .table-wrap > tbody > tr > td p::before,
+#business_calendar_custom_field .table-wrap > tbody > tr > td p::after{
+    content: "";
+    flex-grow: 1;
+    height: 1px;
+    background-color: #2271b1;
+}
+#business_calendar_custom_field .table-wrap > tbody > tr > td p::before{
+    margin-right: 20px;
+}
+#business_calendar_custom_field .table-wrap > tbody > tr > td p::after{
+    margin-left: 20px;
+}
+#business_calendar_custom_field .table-wrap > tbody > tr > td .calendar-wrap:not(:last-child){
+    margin-bottom: 100px;
 }
 #business_calendar_custom_field .table-wrap > tbody > tr > td textarea{
     width: 100%;

@@ -11,16 +11,16 @@ new BusinessCalendar();
 
 class BusinessCalendar{
     public function __construct(){
-        register_activation_hook(__FILE__, array(&$this,'create_post_type'));
-        add_action('admin_enqueue_scripts',array(&$this,'plugin_enqueue_styles'));
-        add_action('wp_enqueue_scripts',array(&$this,'enqueue_styles'));
-        add_action('wp_head', array(&$this,'calendar_ajaxUrl'));
-        add_action('wp_ajax_ajax_business_calendar', array(&$this,'ajax_business_calendar'));
-        add_action('wp_ajax_nopriv_ajax_business_calendar', array(&$this,'ajax_business_calendar'));
-        add_action('init', array(&$this,'create_post_type'));
-        add_action('add_meta_boxes', array(&$this,'create_custom_fields'));
-        add_action('save_post', array(&$this,'save_custom_fields'));
-        add_shortcode('business_calendar', array(&$this,'business_calendar'));
+        register_activation_hook(__FILE__, array($this,'create_post_type'));
+        add_action('admin_enqueue_scripts',array($this,'plugin_enqueue_styles'));
+        add_action('wp_enqueue_scripts',array($this,'enqueue_styles'));
+        add_action('wp_head', array($this,'calendar_ajaxUrl'));
+        add_action('wp_ajax_ajax_business_calendar', array($this,'ajax_business_calendar'));
+        add_action('wp_ajax_nopriv_ajax_business_calendar', array($this,'ajax_business_calendar'));
+        add_action('init', array($this,'create_post_type'));
+        add_action('add_meta_boxes', array($this,'create_custom_fields'));
+        add_action('save_post', array($this,'save_custom_fields'));
+        add_shortcode('business_calendar', array($this,'business_calendar'));
     }
 
     // CSSの読み込み
@@ -64,7 +64,7 @@ class BusinessCalendar{
         add_meta_box(
             'business_calendar_custom_field',
             'カレンダー設定',
-            array(&$this,'custom_field_form'),
+            array($this,'custom_field_form'),
             'business-calendar',
             'normal',
             'default'
@@ -93,6 +93,8 @@ class BusinessCalendar{
             $str_date = array_map(function($day){
                 return strtotime($day);
             },$date);
+        }else{
+            $str_date = array();
         }
 
         // 臨時営業日
@@ -103,6 +105,8 @@ class BusinessCalendar{
             $str_business_day = array_map(function($day){
                 return strtotime($day);
             },$business_day);
+        }else{
+            $str_business_day = array();
         }
         ?>
             <table class="table-wrap">
@@ -132,70 +136,76 @@ class BusinessCalendar{
                         <td>
                             <textarea name="business_day" placeholder="YYYY-MM-DD (例 2001-01-01)の形式で登録します。複数登録する場合は改行してください。"><?php
                                 if($business_day != ''){
-                                        foreach($business_day as $day){
-                                            echo $day."\n";
-                                        }
+                                    foreach($business_day as $day){
+                                        echo $day."\n";
                                     }
+                                }
                             ?></textarea>
                         </td>
                     </tr>
                     <tr>
                         <th><label>カレンダー</label></th>
                         <td>
-                            <p><?php echo date('Y').'年のカレンダー'; ?></p>
-                            <div class="calendar-grid">
-                                <?php
-                                    $month = 1;
-                                    $year = date('Y');
-                                    while($month <= 12):
-                                ?>
-                                <table class="calendar-table">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="7"><span><?php echo $month; ?></span>月</th>
-                                        </tr>
-                                        <tr>
-                                            <th class="sun">日</th>
-                                            <th>月</th>
-                                            <th>火</th>
-                                            <th>水</th>
-                                            <th>木</th>
-                                            <th>金</th>
-                                            <th class="sat">土</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <?php
-                                                $day_count = date('t',mktime(0,0,0,$month,1,$year));
-                                                $first_day = date('w',mktime(0,0,0,$month,1,$year));
-                                                for($i = 0; $i < $first_day; $i++){
-                                                    echo '<td></td>';
-                                                }
-                                                for($day = 1; $day <= $day_count; $day++){
-                                                    if($business_day != '' && in_array(mktime(0,0,0,$month,$day,$year),$str_business_day)){
-                                                        echo '<td class="business">'.$day.'</td>';
-                                                    }elseif($holiday_week != '' && in_array(($day + $first_day - 1) % 7,$holiday_week)){
-                                                        echo '<td class="holiday">'.$day.'</td>';
-                                                    }elseif($date != '' && in_array(mktime(0,0,0,$month,$day,$year),$str_date)){
-                                                        echo '<td><input type="checkbox" name="date[]" id="day'.$month.'-'.$day.'" value="'.$year.'-'.$month.'-'.$day.'" checked/><label for="day'.$month.'-'.$day.'">'.$day.'</label></td>';
-                                                    }else{
-                                                        echo '<td><input type="checkbox" name="date[]" id="day'.$month.'-'.$day.'" value="'.$year.'-'.$month.'-'.$day.'"/><label for="day'.$month.'-'.$day.'">'.$day.'</label></td>';
+                            <?php
+                                $year = date('Y');
+                                for($t = 0; $t < 2; $t++):
+                            ?>
+                            <div class="calendar-wrap">
+                                <p><?php echo $year.'<small>年</small>'; ?></p>
+                                <div class="calendar-grid">
+                                    <?php
+                                        $month = 1;
+                                        while($month <= 12):
+                                    ?>
+                                    <table class="calendar-table">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="7"><?php echo $year; ?>年 <span><?php echo $month; ?></span>月</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="sun">日</th>
+                                                <th>月</th>
+                                                <th>火</th>
+                                                <th>水</th>
+                                                <th>木</th>
+                                                <th>金</th>
+                                                <th class="sat">土</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <?php
+                                                    $day_count = date('t',mktime(0,0,0,$month,1,$year));
+                                                    $first_day = date('w',mktime(0,0,0,$month,1,$year));
+                                                    for($i = 0; $i < $first_day; $i++){
+                                                        echo '<td></td>';
                                                     }
-                                                    if(($day + $first_day) % 7 == 0 && $day != $day_count){
-                                                        echo '</tr><tr>';
+                                                    for($day = 1; $day <= $day_count; $day++){
+                                                        if($business_day != '' && in_array(mktime(0,0,0,$month,$day,$year),$str_business_day)){
+                                                            echo '<td class="business">'.$day.'</td>';
+                                                        }elseif($holiday_week != '' && in_array(($day + $first_day - 1) % 7,$holiday_week)){
+                                                            echo '<td class="holiday">'.$day.'</td>';
+                                                        }elseif($date != '' && in_array(mktime(0,0,0,$month,$day,$year),$str_date)){
+                                                            echo '<td><input type="checkbox" name="date[]" id="day'.$year.'-'.$month.'-'.$day.'" value="'.$year.'-'.$month.'-'.$day.'" checked/><label for="day'.$year.'-'.$month.'-'.$day.'">'.$day.'</label></td>';
+                                                        }else{
+                                                            echo '<td><input type="checkbox" name="date[]" id="day'.$year.'-'.$month.'-'.$day.'" value="'.$year.'-'.$month.'-'.$day.'"/><label for="day'.$year.'-'.$month.'-'.$day.'">'.$day.'</label></td>';
+                                                        }
+                                                        if(($day + $first_day) % 7 == 0 && $day != $day_count){
+                                                            echo '</tr><tr>';
+                                                        }
                                                     }
-                                                }
-                                                while(($day + $first_day) % 7 != 1){
-                                                    echo '<td></td>';
-                                                    $day++;
-                                                }
-                                            ?>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <?php $month++; endwhile; ?>
+                                                    while(($day + $first_day) % 7 != 1){
+                                                        echo '<td></td>';
+                                                        $day++;
+                                                    }
+                                                ?>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <?php $month++; endwhile; ?>
+                                </div>
                             </div>
+                            <?php $year++; endfor; ?>
                         </td>
                     </tr>
                 </tbody>
@@ -241,17 +251,24 @@ class BusinessCalendar{
 
 
     // フロントUI
-    function business_calendar($atts){
-        ?>
-            <div id="business-calendar-postid-<?php echo $atts['postid']; ?>">
-                <?php echo self::draw_business_calendar($atts['postid'],date('Y'),date('m')); ?>
-            </div>
-        <?php
+    function business_calendar($atts) {
+        if (is_admin()) {
+            return;
+        }
+    
+        $postid = isset($atts['postid']) ? esc_attr($atts['postid']) : 0;
+    
+        $output = '';
+        $output .= '<div id="business-calendar-postid-' . $postid . '">';
+        $output .= self::draw_business_calendar($postid, date('Y'), date('m'));
+        $output .= '</div>';
+    
+        return $output;
     }
 
     // 次・前の月のリンクが押された時
     function ajax_business_calendar(){
-        echo self::draw_business_calendar($_POST['postid'],date('Y'),$_POST['month']);
+        echo self::draw_business_calendar($_POST['postid'],$_POST['year'],$_POST['month']);
         wp_die();
     }
 
@@ -288,12 +305,12 @@ class BusinessCalendar{
         }
         ob_start();
         ?>
-            <table class="calendar-table">
+            <table class="calendar-table" data-year="<?php echo $year; ?>">
                 <thead>
                     <tr class="month">
-                        <th><?php if($month != 1): ?><span class="calendar-link js-month" data-postid="<?php echo $postid; ?>" data-month="<?php echo $month - 1; ?>" data-target-calendar="<?php echo '#business-calendar-postid-'.$postid; ?>">&#8810; 前の月</span><?php endif; ?></th>
+                        <th><?php if($year != date('Y') || $month != 1): ?><span class="calendar-link js-month" data-postid="<?php echo $postid; ?>" data-month="<?php echo $month - 1; ?>" data-target-calendar="<?php echo '#business-calendar-postid-'.$postid; ?>">&#8810; 前の月</span><?php endif; ?></th>
                         <th colspan="5"><?php echo $year.'<small>年</small>'.$month.'<small>月</small>'; ?></th>
-                        <th><?php if($month != 12): ?><span class="calendar-link js-month" data-postid="<?php echo $postid; ?>" data-month="<?php echo $month + 1; ?>" data-target-calendar="<?php echo '#business-calendar-postid-'.$postid; ?>">次の月 &#8811;</span><?php endif; ?></th>
+                        <th><?php if($year != date('Y') + 1 || $month != 12): ?><span class="calendar-link js-month" data-postid="<?php echo $postid; ?>" data-month="<?php echo $month + 1; ?>" data-target-calendar="<?php echo '#business-calendar-postid-'.$postid; ?>">次の月 &#8811;</span><?php endif; ?></th>
                     </tr>
                     <tr class="dayWeek">
                         <th>日</th>
