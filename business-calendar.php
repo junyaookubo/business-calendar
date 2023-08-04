@@ -337,6 +337,8 @@ class BusinessCalendar{
                                     echo '<td class="holiday">'.$day.'<small>'.$holiday_text.'</small></td>';
                                 }elseif($date != '' && in_array(mktime(0,0,0,$month,$day,$year),$str_date)){
                                     echo '<td class="holiday">'.$day.'<small>'.$holiday_text.'</small></td>';
+                                }elseif(mktime(0,0,0,$month,$day,$year) == mktime(0,0,0,date('m'),date('d'),date('Y'))){
+                                    echo '<td class="today">'.$day.'</td>';
                                 }else{
                                     echo '<td>'.$day.'</td>';
                                 }
