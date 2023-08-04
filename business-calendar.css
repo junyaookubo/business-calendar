@@ -45,3 +45,26 @@
 .calendar-table .calendar-link{
     cursor: pointer;
 }
+.calendar-table td.today{
+    background-color: #000;
+    color: #fff;
+}
+@media screen and (max-width: 767px){
+    .calendar-table thead .month th[colspan]{
+        font-size: 14px;
+    }
+    .calendar-table thead .month th:not([colspan]){
+        font-size: 10px;
+        letter-spacing: 0;
+    }
+    .calendar-table thead .dayWeek th{
+        font-size: 12px;
+        padding: 2px 0;
+    }
+    .calendar-table td{
+        padding: 7px;
+        height: 43px;
+        font-size: 10px;
+        letter-spacing: 0;
+    }
+}
